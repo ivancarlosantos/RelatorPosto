@@ -1,0 +1,54 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package relatorpostoeaton.business;
+
+import java.util.List;
+import relatorpostoeaton.business.datamodels.AbastecimentoDataModel;
+import relatorpostoeaton.business.jpa.AbastecimentoJpaController;
+import relatorpostoeaton.entities.Abastecimento;
+
+/**
+ *
+ * @author icarlos
+ */
+public class AbastecimentoController {
+
+    private static AbastecimentoController instanceAbastecimentoController;
+    private Abastecimento currentAbastecimento;
+    private List<Abastecimento> abastecItems = null;
+    private AbastecimentoJpaController jpaAbastec = new AbastecimentoJpaController();
+
+    public static AbastecimentoController getInstance() {
+        if (instanceAbastecimentoController == null) {
+            instanceAbastecimentoController = new AbastecimentoController();
+        }
+        return instanceAbastecimentoController;
+    }
+
+    public List<Abastecimento> getAbastecimentoItems() {
+        if (abastecItems == null) {
+            abastecItems = jpaAbastec.findAbastecimentoEntities();
+        }
+        return abastecItems;
+    }
+
+    /**
+     * @return the currentFrentista
+     */
+    public Abastecimento getCurrentAbastecimento() {
+        return currentAbastecimento;
+    }
+
+    /**
+     * @param currentAbastecimento
+     */
+    public void setCurrentAbastecimento(Abastecimento currentAbastecimento) {
+        this.currentAbastecimento = currentAbastecimento;
+    }
+
+    public AbastecimentoDataModel getAbastecimentoDataModel() {
+        return new AbastecimentoDataModel(getAbastecimentoItems());
+    }
+}
